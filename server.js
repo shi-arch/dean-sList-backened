@@ -11,6 +11,7 @@ app.use(express.json());
 // ✅ Health check
 app.get("/api/auth/authorize", (req, res) => {
     console.log(req.body, "Health check");
+    res.redirect("http://10.38.255.119:8081");
   res.send("Backend running ✅");
 });
 
