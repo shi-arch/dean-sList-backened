@@ -9,7 +9,21 @@ app.use(cors());
 app.use(express.json());
 
 // ✅ Health check
-app.get("/api/auth/authorize", (req, res) => {
+
+function mobileOnlyRedirect(req, res, next) {
+  const userAgent = req.headers["user-agent"] || "";
+  console.log("User-Agent:>>>>", userAgent);
+  const isMobile =
+    /Android|iPhone|iPad|iPod|IEMobile|Opera Mini/i.test(userAgent);
+
+  if (isMobile) {
+    return res.redirect(302, "http://10.38.255.119:8081");
+  }
+
+  // Web users continue normally
+  next();
+}
+app.get("/api/auth/authorize", mobileOnlyRedirect, (req, res) => {
     console.log(req.body, "Health check");
     res.redirect("http://10.38.255.119:8081");
   res.send("Backend running ✅");
@@ -20,6 +34,7 @@ const GOOGLE_CLIENT_ID =
   "317999867006-c1chqsld8au82q2ai256mtj63ugav98p.apps.googleusercontent.com";
 
 const client = new OAuth2Client(GOOGLE_CLIENT_ID);
+
 
 app.post("/auth/google", async (req, res) => {
   try {
