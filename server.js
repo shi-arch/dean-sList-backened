@@ -23,9 +23,9 @@ function mobileOnlyRedirect(req, res, next) {
   // Web users continue normally
   next();
 }
-app.get("/api/auth/authorize", mobileOnlyRedirect, (req, res) => {
+app.get("/api/auth/authorize", (req, res) => {
     console.log(req.body, "Health check");
-    res.redirect("http://10.38.255.119:8081");
+    res.redirect("exp://10.38.255.119:8081");
   res.send("Backend running ✅");
 });
 
