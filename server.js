@@ -3,6 +3,9 @@ const https = require("https");
 const fs = require("fs");
 const cors = require("cors");
 const { OAuth2Client } = require("google-auth-library");
+const axios = require("axios");
+const qs = require("qs");
+require("dotenv").config()
 
 const app = express();
 app.use(cors());
@@ -10,24 +13,49 @@ app.use(express.json());
 
 // ✅ Health check
 
-function mobileOnlyRedirect(req, res, next) {
-  const userAgent = req.headers["user-agent"] || "";
-  console.log("User-Agent:>>>>", userAgent);
-  const isMobile =
-    /Android|iPhone|iPad|iPod|IEMobile|Opera Mini/i.test(userAgent);
+async function exchangeCodeForToken(code) {
+  try {
+    const data = qs.stringify({
+      client_id: process.env.GOOGLE_CLIENT_ID,
+      client_secret: process.env.GOOGLE_CLIENT_SECRET,
+      code,
+      grant_type: "authorization_code",
+      redirect_uri: process.env.GOOGLE_REDIRECT_URI,
+    });
 
-  if (isMobile) {
-    return res.redirect(302, "http://10.38.255.119:8081");
+    const response = await axios.post(
+      "https://oauth2.googleapis.com/token",
+      data,
+      {
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+      }
+    );
+
+    return response.data;
+  } catch (error) {
+    console.error("Google token exchange failed:", {
+      status: error.response?.status,
+      data: error.response?.data,
+    });
+    throw error;
   }
-
-  // Web users continue normally
-  next();
 }
-app.get("/api/auth/authorize", mobileOnlyRedirect, (req, res) => {
+app.get("/api/auth/authorize", async (req, res) => {
     console.log(req.body, "Health check");
-    res.redirect("http://10.38.255.119:8081");
+     const { code, state } = req.query;
+      console.log(code, state, "CODE AND STATE");
+      //const token = await exchangeCodeForToken(code);
+    res.redirect("exp://10.38.255.119:8081");
   res.send("Backend running ✅");
 });
+
+app.get("/", async (req, res) => {
+  res.send("Test >>>>>>");
+});
+
+
 
 // 🔴 PUT YOUR GOOGLE WEB CLIENT ID HERE
 const GOOGLE_CLIENT_ID =
