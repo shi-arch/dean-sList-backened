@@ -104,11 +104,11 @@ app.post("/auth/google", async (req, res) => {
 // https.createServer(options, app).listen(3000, () => {
 //   console.log("🔐 HTTPS backend running https://localhost:3000");
 // });
-//module.exports = app;
-app.listen(3000, () => {
-  try {
-    console.log("🔓 HTTP backend running http://localhost:3000");
-  } catch (error) {
-    console.error("Error starting server:", error);
-  }
-});
+module.exports = app;
+// app.listen(3000, () => {
+//   try {
+//     console.log("🔓 HTTP backend running http://localhost:3000");
+//   } catch (error) {
+//     console.error("Error starting server:", error);
+//   }
+// });
