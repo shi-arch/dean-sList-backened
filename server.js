@@ -47,7 +47,7 @@ app.get("/api/auth/authorize", async (req, res) => {
      const { code, state } = req.query;
       console.log(code, state, "CODE AND STATE");
       //const token = await exchangeCodeForToken(code);
-    res.redirect("exp://10.38.255.119:8081");
+    //res.redirect("exp://10.38.255.119:8081");
   res.send("Backend running ✅");
 });
 
@@ -104,11 +104,11 @@ app.post("/auth/google", async (req, res) => {
 // https.createServer(options, app).listen(3000, () => {
 //   console.log("🔐 HTTPS backend running https://localhost:3000");
 // });
-module.exports = app;
-// app.listen(3000, () => {
-//   try {
-//     console.log("🔓 HTTP backend running http://localhost:3000");
-//   } catch (error) {
-//     console.error("Error starting server:", error);
-//   }
-// });
+//module.exports = app;
+app.listen(3000, () => {
+  try {
+    console.log("🔓 HTTP backend running http://localhost:3000");
+  } catch (error) {
+    console.error("Error starting server:", error);
+  }
+});
