@@ -55,43 +55,43 @@ app.get("/", async (req, res) => {
 
 
 // 🔴 PUT YOUR GOOGLE WEB CLIENT ID HERE
-const GOOGLE_CLIENT_ID =
-  "317999867006-c1chqsld8au82q2ai256mtj63ugav98p.apps.googleusercontent.com";
+// const GOOGLE_CLIENT_ID =
+//   "317999867006-c1chqsld8au82q2ai256mtj63ugav98p.apps.googleusercontent.com";
 
-const client = new OAuth2Client(GOOGLE_CLIENT_ID);
+// const client = new OAuth2Client(GOOGLE_CLIENT_ID);
 
 
-app.post("/auth/google", async (req, res) => {
-  try {
-    const { idToken } = req.body;
+// app.post("/auth/google", async (req, res) => {
+//   try {
+//     const { idToken } = req.body;
 
-    if (!idToken) {
-      return res.status(400).json({ message: "Missing idToken" });
-    }
+//     if (!idToken) {
+//       return res.status(400).json({ message: "Missing idToken" });
+//     }
 
-    const ticket = await client.verifyIdToken({
-      idToken,
-      audience: GOOGLE_CLIENT_ID,
-    });
+//     const ticket = await client.verifyIdToken({
+//       idToken,
+//       audience: GOOGLE_CLIENT_ID,
+//     });
 
-    const payload = ticket.getPayload();
+//     const payload = ticket.getPayload();
 
-    res.json({
-      success: true,
-      user: {
-        googleId: payload.sub,
-        email: payload.email,
-        name: payload.name,
-        picture: payload.picture,
-      },
-    });
-  } catch (err) {
-    res.status(401).json({
-      success: false,
-      message: "Invalid Google token",
-    });
-  }
-});
+//     res.json({
+//       success: true,
+//       user: {
+//         googleId: payload.sub,
+//         email: payload.email,
+//         name: payload.name,
+//         picture: payload.picture,
+//       },
+//     });
+//   } catch (err) {
+//     res.status(401).json({
+//       success: false,
+//       message: "Invalid Google token",
+//     });
+//   }
+// });
 
 // const options = {
 //   key: fs.readFileSync("localhost+1-key.pem"),
