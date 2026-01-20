@@ -23,16 +23,16 @@ async function exchangeCodeForToken(code) {
       redirect_uri: process.env.GOOGLE_REDIRECT_URI,
     });
     console.log(data, "DATA>>>>>>>>>>");
-    const response = await axios.post(
-      "https://oauth2.googleapis.com/token",
-      data,
-      {
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
-      }
-    );
-    console.log(response, "response>>>>>>>>>>");
+    // const response = await axios.post(
+    //   "https://oauth2.googleapis.com/token",
+    //   data,
+    //   {
+    //     headers: {
+    //       "Content-Type": "application/x-www-form-urlencoded",
+    //     },
+    //   }
+    // );
+    // console.log(response, "response>>>>>>>>>>");
 
     return response.data;
   } catch (error) {
