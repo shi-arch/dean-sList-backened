@@ -23,16 +23,16 @@ async function exchangeCodeForToken(code) {
       redirect_uri: process.env.GOOGLE_REDIRECT_URI,
     });
     console.log(data, "DATA>>>>>>>>>>");
-    // const response = await axios.post(
-    //   "https://oauth2.googleapis.com/token",
-    //   data,
-    //   {
-    //     headers: {
-    //       "Content-Type": "application/x-www-form-urlencoded",
-    //     },
-    //   }
-    // );
-    // console.log(response, "response>>>>>>>>>>");
+    const response = await axios.post(
+      "https://oauth2.googleapis.com/token",
+      data,
+      {
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+      }
+    );
+    console.log(response, "response>>>>>>>>>>");
 
     return response.data;
   } catch (error) {
@@ -45,11 +45,12 @@ async function exchangeCodeForToken(code) {
 }
 app.get("/api/auth/authorize", async (req, res) => {
     console.log(req.body, "Health check");
-     const { code_challenge, state } = req.query;
-      console.log(code_challenge, state, "CODE CHALLENGE AND STATE");
-      const token = await exchangeCodeForToken(code_challenge);
+    console.log(req.query, "Query parameters");
+    const { code_challenge, state } = req.query;  
+    console.log(code_challenge, state, "CODE CHALLENGE AND STATE");
+    //const token = await exchangeCodeForToken(code_challenge);
     //res.redirect("exp://10.38.255.119:8081");
-  res.send("Backend running ✅");
+    res.send("Backend running ✅");
 });
 
 app.get("/", async (req, res) => {
