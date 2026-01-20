@@ -22,7 +22,7 @@ async function exchangeCodeForToken(code) {
       grant_type: "authorization_code",
       redirect_uri: process.env.GOOGLE_REDIRECT_URI,
     });
-
+    console.log(data, "DATA>>>>>>>>>>");
     const response = await axios.post(
       "https://oauth2.googleapis.com/token",
       data,
@@ -32,6 +32,7 @@ async function exchangeCodeForToken(code) {
         },
       }
     );
+    console.log(response, "response>>>>>>>>>>");
 
     return response.data;
   } catch (error) {
