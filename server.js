@@ -42,11 +42,8 @@ async function exchangeCodeForToken(code) {
     throw error;
   }
 }
-app.get("/api/auth/authorize", async (req, res) => {
+app.get("/api/auth/authorize", (req, res) => {
     console.log(req.body, "Health check");
-     const { code, state } = req.query;
-      console.log(code, state, "CODE AND STATE");
-      //const token = await exchangeCodeForToken(code);
     res.redirect("exp://10.38.255.119:8081");
   res.send("Backend running ✅");
 });
