@@ -16,11 +16,12 @@ app.use(express.json());
 app.get("/api/auth/authorize", async (req, res) => {
     // console.log(req.body, "Health check");
     // console.log(req.query, "Query parameters");
-    // const { code_challenge, state } = req.query;  
+    const { code } = req.query;  
     // console.log(code_challenge, state, "CODE CHALLENGE AND STATE");
     //const token = await exchangeCodeForToken(code_challenge);
     //res.redirect("exp://10.40.0.105:8081/api/auth/token");
-    res.send("Backend running ✅");
+    const redirectUrl = `http://10.40.0.105:8081/api/auth/callback?code=${code}`;
+    return res.redirect(302, redirectUrl);
 });
 
 app.get("/", async (req, res) => {
