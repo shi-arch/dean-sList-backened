@@ -48,7 +48,7 @@ app.get("/api/auth/authorize", async (req, res) => {
     console.log(req.query, "Query parameters");
     const { code } = req.query;  
     //const token = await exchangeCodeForToken(code_challenge);
-    res.redirect("exp://10.40.0.105:8081/api/auth/callback?code=" + code);
+    //res.redirect("exp://10.40.0.105:8081/api/auth/callback?code=" + code);
     res.send("Backend running ✅");
 });
 
