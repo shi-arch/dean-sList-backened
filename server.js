@@ -5,61 +5,111 @@ const cors = require("cors");
 const { OAuth2Client } = require("google-auth-library");
 const axios = require("axios");
 const qs = require("qs");
-require("dotenv").config()
+//require("dotenv").config()
 
 const app = express();
 app.use(cors());
 app.use(express.json());
-
+ 
 // ✅ Health check
-const PORT = process.env.PORT;
-async function verifyGoogleIdToken(idToken) {
-  const ticket = await client.verifyIdToken({
-    idToken,
-    audience: '317999867006-c1chqsld8au82q2ai256mtj63ugav98p.apps.googleusercontent.com', // MUST match
-  });
-  const payload = ticket.getPayload();
-  console.log(payload, 'pppppppppppp')
-  return {
-    googleId: payload.sub,           // unique Google user ID
-    email: payload.email,
-    emailVerified: payload.email_verified,
-    name: payload.name,
-    picture: payload.picture,
-    givenName: payload.given_name,
-    familyName: payload.family_name,
-  };
+
+async function exchangeCodeForToken(code) {
+  try {
+    const data = qs.stringify({
+      client_id: process.env.GOOGLE_CLIENT_ID,
+      client_secret: process.env.GOOGLE_CLIENT_SECRET,
+      code,
+      grant_type: "authorization_code",
+      redirect_uri: process.env.GOOGLE_REDIRECT_URI,
+    });
+    console.log(data, "DATA>>>>>>>>>>");
+    const response = await axios.post(
+      "https://oauth2.googleapis.com/token",
+      data,
+      {
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+      }
+    );
+    console.log(response, "response>>>>>>>>>>");
+
+    return response.data;
+  } catch (error) {
+    console.error("Google token exchange failed:", {
+      status: error.response?.status,
+      data: error.response?.data,
+    });
+    throw error;
+  }
 }
 app.get("/api/auth/authorize", async (req, res) => {
-  const { code } = req.query;
-  // const response = await fetch("https://oauth2.googleapis.com/token", {
-  //   method: "POST",
-  //   headers: { "Content-Type": "application/x-www-form-urlencoded" },
-  //   body: new URLSearchParams({
-  //     client_id: process.env.GOOGLE_CLIENT_ID,
-  //     client_secret: process.env.GOOGLE_CLIENT_SECRET,
-  //     redirect_uri: process.env.REDIRECT_URI,
-  //     grant_type: "authorization_code",
-  //     code: code,
-  //   }),
-  // });
-  // const data = await response.json();
-  // console.log(JSON.stringify(data), "DATA>>>>>>>>>>");
-  // const user = await verifyGoogleIdToken(data.id_token);
-  // console.log(user.emailVerified);
-  // if (user.emailVerified) {
-  //   const redirectUrl = `http://10.40.0.105:8081/api/auth/callback?id_token=${data.id_token}`;
-  //   return res.redirect(302, redirectUrl);
-  // }
-  res.send(code, "Backend running ✅");
+    // console.log(req.body, "Health check");
+    // console.log(req.query, "Query parameters");
+    // const { code_challenge, state } = req.query;  
+    // console.log(code_challenge, state, "CODE CHALLENGE AND STATE");
+    //const token = await exchangeCodeForToken(code_challenge);
+    //res.redirect("exp://10.40.0.105:8081/api/auth/token");
+    res.send("Backend running ✅");
 });
 
 app.get("/", async (req, res) => {
   res.send("Test >>>>>>");
 });
-app.listen(PORT, () => {
+
+
+
+// 🔴 PUT YOUR GOOGLE WEB CLIENT ID HERE
+const GOOGLE_CLIENT_ID =
+  "317999867006-c1chqsld8au82q2ai256mtj63ugav98p.apps.googleusercontent.com";
+
+const client = new OAuth2Client(GOOGLE_CLIENT_ID);
+
+
+app.post("/auth/google", async (req, res) => {
   try {
-    console.log("🔓 HTTP backend running http://localhostsss:" + PORT);
+    const { idToken } = req.body;
+
+    if (!idToken) {
+      return res.status(400).json({ message: "Missing idToken" });
+    }
+
+    const ticket = await client.verifyIdToken({
+      idToken,
+      audience: GOOGLE_CLIENT_ID,
+    });
+
+    const payload = ticket.getPayload();
+
+    res.json({
+      success: true,
+      user: {
+        googleId: payload.sub,
+        email: payload.email,
+        name: payload.name,
+        picture: payload.picture,
+      },
+    });
+  } catch (err) {
+    res.status(401).json({
+      success: false,
+      message: "Invalid Google token",
+    });
+  }
+});
+
+// const options = {
+//   key: fs.readFileSync("localhost+1-key.pem"),
+//   cert: fs.readFileSync("localhost+1.pem"),
+// };
+
+// https.createServer(options, app).listen(3000, () => {
+//   console.log("🔐 HTTPS backend running https://localhost:3000");
+// });
+//module.exports = app;
+app.listen(3000, () => {
+  try {
+    console.log("🔓 HTTP backend running http://localhost:3000");
   } catch (error) {
     console.error("Error starting server:", error);
   }
