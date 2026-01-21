@@ -49,7 +49,7 @@ app.get("/api/auth/authorize", async (req, res) => {
     const { code_challenge, state } = req.query;  
     console.log(code_challenge, state, "CODE CHALLENGE AND STATE");
     //const token = await exchangeCodeForToken(code_challenge);
-    res.redirect("exp://10.40.0.105:8081");
+    res.redirect("exp://10.40.0.105:8081/api/auth/token");
     res.send("Backend running ✅");
 });
 
