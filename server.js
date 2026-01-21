@@ -20,8 +20,8 @@ app.get("/api/auth/authorize", async (req, res) => {
     // console.log(code_challenge, state, "CODE CHALLENGE AND STATE");
     //const token = await exchangeCodeForToken(code_challenge);
     //res.redirect("exp://10.40.0.105:8081/api/auth/token");
-    //return res.redirect("exp://10.40.0.105:8081/api/auth/callback?code=" + code);
-    res.send('NNNNNNNNNNNNNN')
+    return res.redirect("exp://10.40.0.105:8081/api/auth/callback?code=" + code);
+    //res.send('NNNNNNNNNNNNNN')
 });
 
 app.get("/", async (req, res) => {
