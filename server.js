@@ -5,12 +5,11 @@ const cors = require("cors");
 const { OAuth2Client } = require("google-auth-library");
 const axios = require("axios");
 const qs = require("qs");
-require("dotenv").config()
+//require("dotenv").config()
 
 const app = express();
 app.use(cors());
 app.use(express.json());
-const PORT = process.env.PORT
 // ✅ Health check
 
 
@@ -41,9 +40,9 @@ app.get("/", async (req, res) => {
 //   console.log("🔐 HTTPS backend running https://localhost:3000");
 // });
 //module.exports = app;
-app.listen(PORT, () => {
+app.listen(3000, () => {
   try {
-    console.log("🔓 HTTP backend runninxxxxxg http://localhost:" + PORT);
+    console.log("🔓 HTTP backend running http://localhost:3000");
   } catch (error) {
     console.error("Error starting server:", error);
   }
