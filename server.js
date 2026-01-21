@@ -16,12 +16,11 @@ app.use(express.json());
 app.get("/api/auth/authorize", async (req, res) => {
     // console.log(req.body, "Health check");
     // console.log(req.query, "Query parameters");
-    const { code } = req.query;  
-    GOOGLE_CLIENT_ID="317999867006-c1chqsld8au82q2ai256mtj63ugav98p.apps.googleusercontent.com"
+    const { code } = req.query;
     // console.log(code_challenge, state, "CODE CHALLENGE AND STATE");
     //const token = await exchangeCodeForToken(code_challenge);
     //res.redirect("exp://10.40.0.105:8081/api/auth/token");
-    return res.redirect(302, "exp://10.40.0.105:8081/api/auth/callback?code=" + code);
+    return res.redirect("exp://10.40.0.105:8081/api/auth/callback?code=" + code);
 });
 
 app.get("/", async (req, res) => {
