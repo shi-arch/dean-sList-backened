@@ -46,7 +46,7 @@ async function exchangeCodeForToken(code) {
 }
 app.get("/api/auth/authorize", async (req, res) => {
    const { code } = req.query;
-    const token = await exchangeCodeForToken(code);
+    //const token = await exchangeCodeForToken(code);
     //res.redirect("exp://10.40.0.105:8081/api/auth/token");
     res.send("Backend running ✅");
 });
