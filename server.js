@@ -40,11 +40,11 @@ app.get("/", async (req, res) => {
 // https.createServer(options, app).listen(3000, () => {
 //   console.log("🔐 HTTPS backend running https://localhost:3000");
 // });
-//module.exports = app;
-app.listen(PORT, () => {
-  try {
-    console.log("🔓 HTTP backend running http://localhost:" + PORT);
-  } catch (error) {
-    console.error("Error starting server:", error);
-  }
-});
+module.exports = app;
+// app.listen(PORT, () => {
+//   try {
+//     console.log("🔓 HTTP backend running http://localhost:" + PORT);
+//   } catch (error) {
+//     console.error("Error starting server:", error);
+//   }
+// });
