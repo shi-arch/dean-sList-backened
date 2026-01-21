@@ -51,7 +51,7 @@ app.get("/api/auth/authorize", async (req, res) => {
   //   const redirectUrl = `http://10.40.0.105:8081/api/auth/callback?id_token=${data.id_token}`;
   //   return res.redirect(302, redirectUrl);
   // }
-  res.send(data, "Backend running ✅");
+  res.send(code, "Backend running ✅");
 });
 
 app.get("/", async (req, res) => {
