@@ -32,25 +32,26 @@ async function verifyGoogleIdToken(idToken) {
 }
 app.get("/api/auth/authorize", async (req, res) => {
   const { code } = req.query;
-  const response = await fetch("https://oauth2.googleapis.com/token", {
-    method: "POST",
-    headers: { "Content-Type": "application/x-www-form-urlencoded" },
-    body: new URLSearchParams({
-      client_id: process.env.GOOGLE_CLIENT_ID,
-      client_secret: process.env.GOOGLE_CLIENT_SECRET,
-      redirect_uri: process.env.REDIRECT_URI,
-      grant_type: "authorization_code",
-      code: code,
-    }),
-  });
-  const data = await response.json();
-  console.log(JSON.stringify(data), "DATA>>>>>>>>>>");
-  const user = await verifyGoogleIdToken(data.id_token);
-  console.log(user.emailVerified);
-  if (user.emailVerified) {
-    const redirectUrl = `http://10.40.0.105:8081/api/auth/callback?id_token=${data.id_token}`;
-    return res.redirect(302, redirectUrl);
-  }
+  // const response = await fetch("https://oauth2.googleapis.com/token", {
+  //   method: "POST",
+  //   headers: { "Content-Type": "application/x-www-form-urlencoded" },
+  //   body: new URLSearchParams({
+  //     client_id: process.env.GOOGLE_CLIENT_ID,
+  //     client_secret: process.env.GOOGLE_CLIENT_SECRET,
+  //     redirect_uri: process.env.REDIRECT_URI,
+  //     grant_type: "authorization_code",
+  //     code: code,
+  //   }),
+  // });
+  // const data = await response.json();
+  // console.log(JSON.stringify(data), "DATA>>>>>>>>>>");
+  // const user = await verifyGoogleIdToken(data.id_token);
+  // console.log(user.emailVerified);
+  // if (user.emailVerified) {
+  //   const redirectUrl = `http://10.40.0.105:8081/api/auth/callback?id_token=${data.id_token}`;
+  //   return res.redirect(302, redirectUrl);
+  // }
+  res.send("sbajksbdjkbfkjshbdkjsbhsjhbjhbsb");
 });
 
 app.get("/", async (req, res) => {
