@@ -5,11 +5,12 @@ const cors = require("cors");
 const { OAuth2Client } = require("google-auth-library");
 const axios = require("axios");
 const qs = require("qs");
-//require("dotenv").config()
+require("dotenv").config()
 
 const app = express();
 app.use(cors());
 app.use(express.json());
+const port = process.env.PORT;
  
 // ✅ Health check
 
@@ -20,7 +21,7 @@ async function exchangeCodeForToken(code) {
       client_secret: process.env.GOOGLE_CLIENT_SECRET,
       code,
       grant_type: "authorization_code",
-      redirect_uri: process.env.GOOGLE_REDIRECT_URI,
+      redirect_uri: 'exp://10.40.0.105:8081',
     });
     console.log(data, "DATA>>>>>>>>>>");
     const response = await axios.post(
@@ -44,11 +45,8 @@ async function exchangeCodeForToken(code) {
   }
 }
 app.get("/api/auth/authorize", async (req, res) => {
-    console.log(JSON.stringify(req.query), "Health check");
-    console.log(req.query, "Query parameters");
-    const { code_challenge, state } = req.query;  
-    console.log(code_challenge, state, "CODE CHALLENGE AND STATE");
-    //const token = await exchangeCodeForToken(code_challenge);
+   const { code } = req.query;
+    const token = await exchangeCodeForToken(code);
     //res.redirect("exp://10.40.0.105:8081/api/auth/token");
     res.send("Backend running ✅");
 });
@@ -107,9 +105,9 @@ app.post("/auth/google", async (req, res) => {
 //   console.log("🔐 HTTPS backend running https://localhost:3000");
 // });
 //module.exports = app;
-app.listen(3000, () => {
+app.listen(port, () => {
   try {
-    console.log("🔓 HTTP backend running http://localhost:3000");
+    console.log(`🔓 HTTP backend running http://localhost:${port}`);
   } catch (error) {
     console.error("Error starting server:", error);
   }
