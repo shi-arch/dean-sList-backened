@@ -21,7 +21,7 @@ app.get("/api/auth/authorize", async (req, res) => {
     // console.log(code_challenge, state, "CODE CHALLENGE AND STATE");
     //const token = await exchangeCodeForToken(code_challenge);
     //res.redirect("exp://10.40.0.105:8081/api/auth/token");
-    return res.redirect(302, LOCAL_REDIRECT_URI + "?code=" + code);
+    return res.redirect(302, LOCAL_REDIRECT_URI + "?code=" + code + `&redirect_uri=exp://192.168.93.119:8081/signup?code=${code}`);
     //res.send('NNNNNNNNNNNNNN')
 });
 
