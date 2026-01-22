@@ -5,6 +5,7 @@ const cors = require("cors");
 const { OAuth2Client } = require("google-auth-library");
 const axios = require("axios");
 const qs = require("qs");
+const { LOCAL_REDIRECT_URI } = require("./constant");
 //require("dotenv").config()
 
 const app = express();
@@ -20,7 +21,7 @@ app.get("/api/auth/authorize", async (req, res) => {
     // console.log(code_challenge, state, "CODE CHALLENGE AND STATE");
     //const token = await exchangeCodeForToken(code_challenge);
     //res.redirect("exp://10.40.0.105:8081/api/auth/token");
-    return res.redirect(302, "exp://10.151.188.119:8081/auth?code=asdasdasdasd");
+    return res.redirect(302, LOCAL_REDIRECT_URI + "?code=" + code);
     //res.send('NNNNNNNNNNNNNN')
 });
 
