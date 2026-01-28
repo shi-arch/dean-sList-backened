@@ -22,7 +22,9 @@ app.get("/api/auth/authorize", async (req, res) => {
 app.post('/payment-sheet', async (req, res) => {
   // Use an existing Customer ID if this is a returning customer.
   const amount = 1099;
+  console.log(amount,'amountmmmmmmmmmmmmmmmmm')
   const customer = await stripe.customers.create({"stripeAccount":'{{CONNECTED_ACCOUNT_ID}}'});
+  console.log(customer,'ffffffffffffffffffffffffff')
   const customerSession = await stripe.customerSessions.create({
     customer: customer.id,
     components: {
@@ -36,6 +38,7 @@ app.post('/payment-sheet', async (req, res) => {
       },
     },
   });
+  console.log(customerSession,'ccccccccccccccccccccccccccccccccc')
   const paymentIntent = await stripe.paymentIntents.create({
     amount: 1099,
     currency: 'gbp',
@@ -46,6 +49,7 @@ app.post('/payment-sheet', async (req, res) => {
       enabled: true,
     },
   });
+  console.log(paymentIntent,'ppppppppppppppppppppppppppppppp')
 
   res.json({
     paymentIntent: paymentIntent.client_secret,
