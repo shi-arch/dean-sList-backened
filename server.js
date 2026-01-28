@@ -6,7 +6,8 @@ const { OAuth2Client } = require("google-auth-library");
 const axios = require("axios");
 const qs = require("qs");
 const { LOCAL_REDIRECT_URI } = require("./constant");
-//require("dotenv").config()
+const stripe = require('stripe')
+require("dotenv").config()
 
 const app = express();
 app.use(cors());
@@ -74,6 +75,7 @@ app.get("/", async (req, res) => {
 app.listen(3000, () => {
   try {
     console.log("🔓 HTTP backend running http://localhost:3000");
+    console.log(`Using Redirect URI: ${process.env.publishableKey}`);
   } catch (error) {
     console.error("Error starting server:", error);
   }
