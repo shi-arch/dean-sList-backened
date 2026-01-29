@@ -52,13 +52,13 @@ app.post('/payment-sheet', async (req, res) => {
     },
   });
   console.log(paymentIntent,'ppppppppppppppppppppppppppppppp')
-
-  res.json({
-    paymentIntent: paymentIntent.client_secret,
-    customerSessionClientSecret: customerSession.client_secret,
-    customer: customer.id,
-    publishableKey: process.env.publishableKey,
-  });
+  res.send("Test >>>>>>");
+  // res.json({
+  //   paymentIntent: paymentIntent.client_secret,
+  //   customerSessionClientSecret: customerSession.client_secret,
+  //   customer: customer.id,
+  //   publishableKey: process.env.publishableKey,
+  // });
 });
 
 app.get("/", async (req, res) => {
