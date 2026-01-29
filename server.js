@@ -23,7 +23,7 @@ app.post('/payment-sheet', async (req, res) => {
   // Use an existing Customer ID if this is a returning customer.
   const amount = 1099;
   console.log(amount,'amountmmmmmmmmmmmmmmmmm')
-  const stripe = new Stripe(process.env.secretKey);
+  const stripe = new Stripe(process.env.EXPO_PUBLIC_SECRET_KEY);
   console.log(stripe,'stripeeeeeeeeeeeeeeeeeeeeee')
   const customer = await stripe.customers.create();
   console.log(customer,'ffffffffffffffffffffffffff')
@@ -81,7 +81,7 @@ app.get("/", async (req, res) => {
 app.listen(3000, () => {
   try {
     console.log("🔓 HTTP backend running http://localhost:3000");
-    console.log(`Using Redirect URI: ${process.env.publishableKey}`);
+    console.log(`Using Redirect URI: ${process.env.EXPO_PUBLIC_PUBLISHABLE_KEY}`);
   } catch (error) {
     console.error("Error starting server:", error);
   }
