@@ -79,7 +79,7 @@ app.get("/", async (req, res) => {
 app.listen(3000, () => {
   try {
     console.log("🔓 HTTP backend running http://localhost:3000");
-    console.log(`Using Redirect URI: ${process.env.EXPO_PUBLIC_STRIPE_PUBLISHABLE_KEY}`);
+    console.log(`Using Redirect URI: ${process.env.STRIPE_SECRET_KEY}`);
   } catch (error) {
     console.error("Error starting server:", error);
   }
