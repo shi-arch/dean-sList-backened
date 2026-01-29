@@ -24,8 +24,8 @@ app.post('/payment-sheet', async (req, res) => {
   const amount = 1099;
   console.log(amount,'amountmmmmmmmmmmmmmmmmm')
   const stripe = new Stripe(process.env.secretKey);
-  console.Console.log(stripe,'stripeeeeeeeeeeeeeeeeeeeeee')
-  const customer = await stripe.customers.create({"stripeAccount":'{{CONNECTED_ACCOUNT_ID}}'});
+  console.log(stripe,'stripeeeeeeeeeeeeeeeeeeeeee')
+  const customer = await stripe.customers.create();
   console.log(customer,'ffffffffffffffffffffffffff')
   const customerSession = await stripe.customerSessions.create({
     customer: customer.id,
