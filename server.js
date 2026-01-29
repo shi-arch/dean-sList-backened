@@ -6,7 +6,7 @@ const { OAuth2Client } = require("google-auth-library");
 const axios = require("axios");
 const qs = require("qs");
 const { LOCAL_REDIRECT_URI } = require("./constant");
-const stripe = require('stripe')
+const Stripe = require('stripe')
 require("dotenv").config()
 
 const app = express();
@@ -23,6 +23,8 @@ app.post('/payment-sheet', async (req, res) => {
   // Use an existing Customer ID if this is a returning customer.
   const amount = 1099;
   console.log(amount,'amountmmmmmmmmmmmmmmmmm')
+  const stripe = new Stripe(process.env.secretKey);
+  console.Console.log(stripe,'stripeeeeeeeeeeeeeeeeeeeeee')
   const customer = await stripe.customers.create({"stripeAccount":'{{CONNECTED_ACCOUNT_ID}}'});
   console.log(customer,'ffffffffffffffffffffffffff')
   const customerSession = await stripe.customerSessions.create({
