@@ -23,6 +23,7 @@ app.post('/payment-sheet', async (req, res) => {
   // Use an existing Customer ID if this is a returning customer.
   const amount = 1099;
   console.log(amount,'amountmmmmmmmmmmmmmmmmm')
+  console.log(process.env.STRIPE_SECRET_KEY,'process.env.STRIPE_SECRET_KEYkkkkkkkkkkkkkkk')
   const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
   console.log(stripe,'stripeeeeeeeeeeeeeeeeeeeeee')
   const customer = await stripe.customers.create();
