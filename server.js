@@ -24,7 +24,7 @@ app.post("/payment-sheet", async (req, res) => {
   try {
     const stripe = new Stripe("sk_test_51SuZh6P8Eeo4sP2u8a5iFaK1k0NKbnjUBIejCxXvbOrffPyEtd1sXroSfN35DL5O0lPGiD1WjbPsKNDB9GtYj30800kStqWD13");
     console.log("Stripe initialized");
-    const amount = 1099;
+    const amount = req.body.amount;
 
     const customer = await stripe.customers.create();
 
