@@ -1,1 +1,1 @@
-export const LOCAL_REDIRECT_URI = "http://10.104.213.180:8081/api/auth/callback";
+export const LOCAL_REDIRECT_URI = "http://192.168.29.148:8081/api/auth/callback";

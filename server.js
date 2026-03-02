@@ -1,6 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const Stripe = require("stripe");
+const { LOCAL_REDIRECT_URI } = require("./constant");
 require("dotenv").config();
 
 const app = express();
@@ -15,8 +16,7 @@ app.get("/", (req, res) => {
 
 // ✅ OAuth redirect (env-based)
 app.get("/api/auth/authorize", (req, res) => {
-  const redirectUri = process.env.REDIRECT_URI;
-  return res.redirect(302, `${redirectUri}?code=${req.query.code}`);
+  return res.redirect(302, `${LOCAL_REDIRECT_URI}?code=${req.query.code}`);
 });
 
 // ✅ Stripe Payment Sheet
